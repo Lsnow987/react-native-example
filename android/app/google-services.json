@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "170555641205",
+    "project_id": "hatzola-fd503",
+    "storage_bucket": "hatzola-fd503.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170555641205:android:91add776cd7eb891fd973c",
+        "android_client_info": {
+          "package_name": "com.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170555641205-902ub0ldtkslbu2hqrs9nbciamqlretv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtz6RUaAkK3cPUeU_YpERhawWhioODBbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170555641205-902ub0ldtkslbu2hqrs9nbciamqlretv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
