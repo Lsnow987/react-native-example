@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, PermissionsAndroid, Button, TextInput } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import firebase from 'firebase';
+import BackgroundFetch from 'react-native-background-fetch';
+
 
 const App = () => {
   const [location, setLocation] = useState({});
@@ -14,7 +16,7 @@ const App = () => {
   const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log('You can access the location');
@@ -27,19 +29,21 @@ const App = () => {
   };
 
   const getCurrentLocation = () => {
-    setLoading(true);
-    Geolocation.getCurrentPosition(
-      position => {
-        setLocation(position.coords);
-        setLoading(false);
-        // console.log('App.js getCurrentLocation callled1111 and location was set to: ', location);
-      },
-      error => {
-        setError(error.message);
-        setLoading(false);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
+    if (firebase.auth().currentUser) {
+      setLoading(true);
+      Geolocation.getCurrentPosition(
+        position => {
+          setLocation(position.coords);
+          setLoading(false);
+          // console.log('App.js getCurrentLocation callled1111 and location was set to: ', location);
+        },
+        error => {
+          setError(error.message);
+          setLoading(false);
+        },
+        {enableHighAccuracy: false, timeout: 15000, maximumAge: 10000},
+      );
+    }
   };
 
   useEffect(() => {
@@ -54,13 +58,16 @@ const App = () => {
     }
 
     // Get the current user's ID
-    const userId = firebase.auth().currentUser.uid;
+    if (firebase.auth().currentUser) {
 
-    // Set the location data for the current user
-    firebase.database().ref(`locations/${userId}`).set({
-      latitude: location.latitude,
-      longitude: location.longitude
-    });
+      const userId = firebase.auth().currentUser.uid;
+
+      // Set the location data for the current user
+      firebase.database().ref(`locations/${userId}`).set({
+        latitude: location.latitude,
+        longitude: location.longitude
+      });
+    }
   }
 
   useEffect(() => {
@@ -121,7 +128,7 @@ const App = () => {
     // Start getting the location every 10 seconds
     setInterval(() => {
       getCurrentLocation();
-    }, 10000);
+    }, 30000);
 
     return () => unsubscribe();
   }, [user]);

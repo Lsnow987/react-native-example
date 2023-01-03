@@ -14,6 +14,8 @@
     "firebase": "^8.2.3",
     "react": "18.1.0",
     "react-native": "^0.70.6",
+    "react-native-background-fetch": "^4.1.7",
+    "react-native-background-geolocation": "^4.9.4",
     "react-native-geolocation-service": "^5.3.1"
   },
   "devDependencies": {
